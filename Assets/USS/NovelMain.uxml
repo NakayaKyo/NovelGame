@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/USS/NovelCommon.uss?fileID=7433441132597879392&amp;guid=9c27df7d0868a78449b65d9dd1675ff1&amp;type=3#NovelCommon" />
+    <ui:VisualElement name="Mainwindow" style="width: 1150px; height: 270px; background-color: rgb(106, 106, 106); left: 5%; top: 60%; -unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Regular.otf?fileID=12800000&amp;guid=f4acdf212c086734ba3cb09ef5d1a7f6&amp;type=3#NotoSansJP-Regular&apos;);">
+        <ui:Label display-tooltip-when-elided="true" name="TextArea" style="font-size: 48px; left: 5%; top: 10%; height: 206px; width: 1070px; color: rgb(255, 255, 255); -unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Regular.otf?fileID=12800000&amp;guid=f4acdf212c086734ba3cb09ef5d1a7f6&amp;type=3#NotoSansJP-Regular&apos;); -unity-font-definition: none;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="NamePlate" style="width: 300px; height: 80px; left: 5%; top: 10%; background-color: rgb(106, 106, 106); -unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Regular.otf?fileID=12800000&amp;guid=f4acdf212c086734ba3cb09ef5d1a7f6&amp;type=3#NotoSansJP-Regular&apos;);">
+        <ui:Label display-tooltip-when-elided="true" name="NameArea" style="font-size: 48px; left: 5%; height: 61px; width: 272px; top: 6%; color: rgb(255, 255, 255); -unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Regular.otf?fileID=12800000&amp;guid=f4acdf212c086734ba3cb09ef5d1a7f6&amp;type=3#NotoSansJP-Regular&apos;); -unity-font-definition: none;" />
+    </ui:VisualElement>
+</ui:UXML>

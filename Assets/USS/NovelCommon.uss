@@ -1,0 +1,12 @@
+.Hide {
+    visibility: hidden;
+}
+
+.Border {
+    background-color: rgb(255, 0, 0);
+}
+
+.Select {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 0912b299e26a0c0449bdc62ffd74441f
+  m_SerializeEntries:
+  - m_GUID: 56a10afd23737264cb8dc82236a6f790
+    m_Address: ScenarioData/TestScenario.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8deee3592fb28e24eb8f091abe1ad2b5
+    m_Address: Assets/images/bg01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6b0c9f65a988bb74797334d2938c2972
+    m_Address: Assets/images/bg02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 23765214e5f8c584fae91f479b17f96b
+    m_Address: Assets/images/char.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 944f319e09f91604bba36deae2bf3bab
+    m_Address: Assets/Audio/natsuyasuminotanken.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 90183f609318f1a4c9fdd966ed58f078, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 206979734d9dece41872c0dce1bc2ec2, type: 2}
+    - {fileID: 11400000, guid: 7e2a676404e646c448f940d6fb6442a3, type: 2}

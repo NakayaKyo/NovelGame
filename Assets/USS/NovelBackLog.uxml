@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/USS/NovelCommon.uss?fileID=7433441132597879392&amp;guid=9c27df7d0868a78449b65d9dd1675ff1&amp;type=3#NovelCommon" />
+    <ui:VisualElement name="BACKLOGAREA" class="Hide" style="width: 1280px; height: 720px; background-color: rgba(0, 0, 0, 0.55);">
+        <ui:ScrollView name="BACKLOG" focusable="false" horizontal-scroller-visibility="Auto" style="width: 1200px; height: 680px; left: 40px; top: 20px; font-size: 32px; color: rgb(255, 255, 255); -unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Light.otf?fileID=12800000&amp;guid=ad953c87670c30b4ab8dc6f9825c33be&amp;type=3#NotoSansJP-Light&apos;); -unity-font-definition: none;" />
+    </ui:VisualElement>
+</ui:UXML>
