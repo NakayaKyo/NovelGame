@@ -71,6 +71,10 @@ namespace NovelSystem.Contoroller
                     skipLineFlag = true;
                     break;
                 case "LABEL":
+                    skipLineFlag = true;
+                    break;
+                case "GOTO":
+                    skipLineFlag = true;
                     break;
                 case "SE":
                     Debug.Log("Analyze SE");
@@ -220,12 +224,17 @@ namespace NovelSystem.Contoroller
                     {
                         selectText.Add(split[i]);
                         selectGoto.Add(split[i + 1]);
+
+                        Debug.Log("AnalizeSelect[" + i + "] :Text "+ split[i]);
+
                         count++;
                     }
 
                     selectInfo.SelectNumber = count;
                     selectInfo.SelectText = selectText;
                     selectInfo.SelectGoTo = selectGoto;
+
+                    Debug.Log("AnalizeSelectCount:" + count);
                 }
                 else
                 {

@@ -14,7 +14,6 @@ namespace MainSystem.Common
             var mouse = Mouse.current.leftButton;
             if (mouse.wasPressedThisFrame)
             {
-                Debug.Log("Press");
                 return true;
             }
             return false;

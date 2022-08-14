@@ -24,7 +24,7 @@ namespace NovelSystem.Contoroller
         {
             scenarioData = input;
             maxLine = scenarioData.scenarioData.Count;
-            currentLine = 0;
+            currentLine = -1;
             Debug.Log("MaxLine : " + maxLine);
             return 0;
         }
@@ -100,28 +100,67 @@ namespace NovelSystem.Contoroller
             else { return false; }
         }
 
+        public bool CheckOrderGoto()
+        {
+            if (analyzer.GetOrder() == "GOTO") { return true; }
+            else { return false; }
+        }
+
         public StandData GetStandInfo()
         {
             return analyzer.GetStandInfo();
         }
 
-
         // 選択肢を選択した結果
         public void SelectionSelect(int selectNo)
         {
+            Debug.Log("selectNo : " + selectNo);
+
+            string gotoLabel = analyzer.GetSelectGoTo(selectNo);
+
+            // Goto実行
+            GotoLabel(gotoLabel);
 
         }
 
-        //選択肢内容を取得
+        public string GetGotoLabel()
+        {
+            string label = scenarioData.scenarioData[currentLine].OrderDetail;
+            return label;
+        }
+
+        // GOTO命令実行
+        public void GotoLabel(string gotoLabel)
+        {
+            int line = FindLabel(gotoLabel);
+
+            if (line == -1)
+            {
+                Debug.Log("Find Error: Nothing To Label");
+            }
+            else
+            {
+                currentLine = line;
+            }
+        }
+
+        // 選択肢内容を取得
         public string GetSelectText(int selectNo)
         {
             return analyzer.GetSelectText(selectNo);
         }
 
-        //選択肢個数
+        // 選択肢個数を取得
         public int GetSelectNumber()
         {
             return analyzer.GetSelectNumber();
+        }
+
+        // 空白イベント用
+        public bool CheckOrderEmpty()
+        {
+            if (analyzer.GetOrder() == "LABEL") { return true; }
+            else { return false; }
         }
 
         public BgmData GetBgmInfo()
@@ -136,5 +175,45 @@ namespace NovelSystem.Contoroller
             return scenarioData.scenarioData[line].Text;
         }
 
+        /// <summary>
+        /// ラベル探索（現在のスクリプトのみ、同一ラベル名探査はなし）
+        /// </summary>
+        /// <param name="findLabel"></param>
+        /// <returns></returns>
+        private int FindLabel(string findLabel)
+        {
+            // 現在行よりも後にラベルがあるのか探す
+            for(int i= currentLine + 1; i< maxLine; i++)
+            {
+                ScenarioMaster scenarioMaster = new ScenarioMaster();
+                scenarioMaster = scenarioData.scenarioData[i];
+                // ラベル
+                if (scenarioMaster.Order == "LABEL")
+                {
+                    if(scenarioMaster.OrderDetail == findLabel){
+                        Debug.Log("FindLabel:Find After");
+                        return i; 
+                    }
+                }
+            }
+            
+            // 現在行→最初に向けて探索する
+            for(int i= currentLine - 1; i >= 0; i--)
+            {
+                ScenarioMaster scenarioMaster = new ScenarioMaster();
+                scenarioMaster = scenarioData.scenarioData[i];
+                // ラベル
+                if (scenarioMaster.Order == "LABEL")
+                {
+                    if (scenarioMaster.OrderDetail == findLabel) {
+                        Debug.Log("FindLabel:Find Before");
+                        return i; 
+                    }
+                }
+            }
+
+            // 見つからなかった場合
+            return -1;
+        }
     }
 }

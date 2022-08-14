@@ -2,11 +2,10 @@
     visibility: hidden;
 }
 
-.Border {
-    background-color: rgb(255, 0, 0);
+.Select {
+    
 }
 
-.Select {
-    display: flex;
-    flex-direction: column;
+.Select :hover{
+    background-color: rgb(72, 61, 139);
 }
