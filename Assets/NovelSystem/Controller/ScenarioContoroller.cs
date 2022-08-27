@@ -4,6 +4,9 @@ using UnityEngine;
 
 using NovelSystem.Editer;
 using NovelSystem.Data;
+using NovelSystem.Calculator;
+using System.Linq;
+
 
 namespace NovelSystem.Contoroller
 {
@@ -63,6 +66,8 @@ namespace NovelSystem.Contoroller
         public string GetText()
         {
             string text = scenarioData.scenarioData[currentLine].Text;
+            DataManager dataManager = new DataManager();
+            text = dataManager.ReplaceVariable(text);
             return text;
         }
 
@@ -76,40 +81,24 @@ namespace NovelSystem.Contoroller
 
         public int GetMaxLine() { return maxLine;  }
 
-        public bool CheckOrderStand()
-        {
-            if (analyzer.GetOrder() == "STAND") { return true; }
-            else { return false; }
-        }
-
-        public bool CheckOrderBg()
-        {
-            if (analyzer.GetOrder() == "BG_SWITCH") { return true; }
-            else { return false; }
-        }
-
-        public bool CheckOrderBgm()
-        {
-            if (analyzer.GetOrder().StartsWith("Bgm")) { return true; }
-            else { return false; }
-        }
-
-        public bool CheckOrderSelect()
-        {
-            if (analyzer.GetOrder() == "SELECT") { return true; }
-            else { return false; }
-        }
-
-        public bool CheckOrderGoto()
-        {
-            if (analyzer.GetOrder() == "GOTO") { return true; }
-            else { return false; }
+        public Order.Name GetOrderUpper(){
+            return Order.GetNameByOrder(analyzer.GetOrder().ToUpper());  
         }
 
         public StandData GetStandInfo()
         {
             return analyzer.GetStandInfo();
         }
+
+        //
+        public void SetVariable()
+        {
+            DataManager dataManager = new DataManager();
+            var variable = analyzer.GetVariable();
+
+            dataManager.Set(variable.Name, variable.Value);
+            
+        } 
 
         // 選択肢を選択した結果
         public void SelectionSelect(int selectNo)
@@ -142,6 +131,13 @@ namespace NovelSystem.Contoroller
             {
                 currentLine = line;
             }
+        }
+
+        // 
+        public string GetCalcDetail()
+        {
+            string label = scenarioData.scenarioData[currentLine].OrderDetail;
+            return label;
         }
 
         // 選択肢内容を取得
@@ -214,6 +210,21 @@ namespace NovelSystem.Contoroller
 
             // 見つからなかった場合
             return -1;
+        }
+
+        /// <summary>
+        /// 計算式計算実行
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public int calc(string str)
+        {
+            var result = Calculator.Evaluator.Evaluate(str);
+
+            // 計算結果をConsoleへ出力
+            Debug.Log(str + " = " + result);
+
+            return 0;
         }
     }
 }

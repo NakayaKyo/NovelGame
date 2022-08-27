@@ -7,7 +7,6 @@ using UnityEngine;
 using NovelSystem.Data;
 using NovelSystem.Common;
 
-
 namespace NovelSystem.Contoroller
 {
     /// <summary>
@@ -35,6 +34,9 @@ namespace NovelSystem.Contoroller
         // 選択肢情報
         private SelectData selectInfo = new SelectData();
 
+        // 変数情報
+        private VariableData variableData = new VariableData();
+
         /// <summary>
         /// 処理を解析するメソッド
         /// </summary>
@@ -44,57 +46,53 @@ namespace NovelSystem.Contoroller
         public int Analyze(string order, string detail)
         {
             int result = 0;
+
+            // 大文字変換
+            if (order != "") { order = order.ToUpper(); }
+
+            Debug.Log("Analyze "+ order);
+
             switch (order)
             {
                 case "":
-                case "TEXT":
+                case Order.ORDER_TEXT:
                     skipLineFlag = false;
-                    // TODO: font変更とかここで判定処理？
                     break;
-                case "STAND":
-                    Debug.Log("Analyze STAND");
+                case Order.ORDER_STAND:
                     result = Stand(detail);
                     skipLineFlag = true;
                     break;
-                case "BG_SWITCH":
-                    Debug.Log("Analyze BG");
+                case Order.ORDER_BG:
                     result = SwitchBg(detail);
                     skipLineFlag = true;
                     break;
-                case "FLAG":
+                case Order.ORDER_SET:
+                    result = Set(detail);
+                    skipLineFlag = true;
                     break;
-                case "FLAG_IF":
+                case Order.ORDER_IF:
+                    result = If(detail);
+                    skipLineFlag = true;
                     break;
-                case "SELECT":
-                    Debug.Log("Analyze SELECT");
+                case Order.ORDER_CALC:
+                    skipLineFlag = true;
+                    break;
+                case Order.ORDER_SELECT:
                     result = Select(detail);
                     skipLineFlag = true;
                     break;
-                case "LABEL":
+                case Order.ORDER_LABEL:
                     skipLineFlag = true;
                     break;
-                case "GOTO":
+                case Order.ORDER_GOTO:
                     skipLineFlag = true;
                     break;
-                case "SE":
-                    Debug.Log("Analyze SE");
+                case Order.ORDER_SE:
                     //result = Se(detail);
                     break;
-                case "BGM_START":
-                    Debug.Log("Analyze BGM_START");
+                case Order.ORDER_BGM:
                     result = setBgmInfo("START",detail);
-                    break;
-                case "BGM_STOP":
-                    Debug.Log("Analyze BGM_STOP");
-                    result = setBgmInfo("STOP", detail);
-                    break;
-                case "BGM_RESUME":
-                    Debug.Log("Analyze BGM_RESUME");
-                    result = setBgmInfo("RESUME", detail);
-                    break;
-                case "BGM_SWITCH":
-                    Debug.Log("Analyze BGM_SWITCH");
-                    result = setBgmInfo("SWITCH", detail);
+                    skipLineFlag = true;
                     break;
                 default:
                     result = -1;
@@ -123,6 +121,12 @@ namespace NovelSystem.Contoroller
         /// </summary>
         /// <returns></returns>
         public string GetSelectText(int selectNo) { return selectInfo.SelectText[selectNo]; }
+
+        /// <summary>
+        /// 変数情報を取得する
+        /// </summary>
+        /// <returns></returns>
+        public VariableData GetVariable() { return variableData; }
 
         /// <summary>
         ///  選択肢の飛び先ラベルを返却する
@@ -249,6 +253,76 @@ namespace NovelSystem.Contoroller
                 return -1;
             }
 
+            return 0;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="detail"></param>
+        /// <returns></returns>
+        private int Calc(string detail)
+        {
+            NovelSystemCommon nsc = new NovelSystemCommon();
+
+            try
+            {
+                // 初期化
+
+                string[] split = detail.Split(",");
+                // 分割した結果、要素数が偶数の時かつ、選択肢が５つまで(いったん５つにする)
+                if (nsc.CheckEvenNumber(split.Length) && split.Length <= 10)
+                {
+                }
+                else
+                {
+                    Debug.Log("CEN :" + nsc.CheckEvenNumber(split.Length));
+                    errorInfo = "Order:SELECT UnmatchError ElementNum =: " + split.Length;
+                    return -1;
+                }
+            }
+            catch (Exception e)
+            {
+                errorInfo = "Order:SELECT UnknownErorr =: " + e;
+                return -1;
+            }
+            return 0;
+        }
+
+        private int Set(string detail)
+        {
+            try
+            {
+                // 初期化
+                variableData = new VariableData();
+
+                string[] split = detail.Split(",");
+                // 要素数２の時のみ許可する
+                if (split.Length == 2)
+                {
+                    variableData.Name = split[0];
+                    variableData.Value = split[1];
+                }
+                else
+                {
+                    errorInfo = "Order:Set UnmatchError ElementNum =: " + split.Length;
+                    return -1;
+                }
+            }
+            catch (Exception e)
+            {
+                errorInfo = "Order:Set UnknownErorr =: " + e;
+                return -1;
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// IF文解析
+        /// </summary>
+        /// <returns></returns>
+        private int If(string detail)
+        {
             return 0;
         }
 

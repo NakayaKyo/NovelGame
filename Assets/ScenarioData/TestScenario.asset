@@ -13,11 +13,19 @@ MonoBehaviour:
   m_Name: TestScenario
   m_EditorClassIdentifier: 
   scenarioData:
+  - Order: CALC
+    OrderDetail: 1+2*(3+4)+5*(6*(7+8)+(9+10))+1sin2
+    Name: 
+    Text: 
+  - Order: SET
+    OrderDetail: TEST,MESSAGE
+    Name: 
+    Text: 
   - Order: LABEL
     OrderDetail: START
     Name: 
     Text: 
-  - Order: BG_SWITCH
+  - Order: BG
     OrderDetail: 
     Name: 
     Text: 
@@ -69,6 +77,10 @@ MonoBehaviour:
     OrderDetail: 
     Name: 
     Text: "\u30DE\u30A6\u30B9\u30DB\u30A4\u30FC\u30EB\u3067\u5C65\u6B74\u3092\u95B2\u89A7\u3067\u304D\u307E\u3059"
+  - Order: TEXT
+    OrderDetail: 
+    Name: 
+    Text: "\u5909\u6570\u3092\u8868\u793ATEST=\\[TEST]"
   - Order: LABEL
     OrderDetail: SELECT3
     Name: 

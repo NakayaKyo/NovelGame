@@ -17,9 +17,10 @@ using NovelSystem.Editer;
 using NovelSystem.Data;
 using MainSystem.Common;
 
+
 namespace NovelSystem
 {
-    public class DummyManager : MonoBehaviour
+    public class DummyManager : MonoBehaviour 
     {
 
         [SerializeField]
@@ -71,6 +72,9 @@ namespace NovelSystem
             scenarioContoroller = new ScenarioContoroller();
 
             audioController = new AudioController();
+
+            // 一時的にこちらで実施する
+            MainSystem.Container.UserManager.Instance.Initialize();
 
             //TODO:アセット読み込み用のローディング機能作りたい
 
@@ -241,96 +245,103 @@ namespace NovelSystem
                     }
                     else
                     {
-                        // 立ち絵制御の場合
-                        if (scenarioContoroller.CheckOrderStand())
+                        switch (scenarioContoroller.GetOrderUpper())
                         {
-                            StandData standData = scenarioContoroller.GetStandInfo();
+                            // 立ち絵制御の場合
+                            case Order.Name.Stand:
+                                StandData standData = scenarioContoroller.GetStandInfo();
 
-                            if (standData.Point == "DELETE")
-                            {
-                                var stand1 = novelStand.rootVisualElement.Q<VisualElement>("RIGHT");
-                                stand1.AddToClassList("Hide");
-                                var stand2 = novelStand.rootVisualElement.Q<VisualElement>("CENTER");
-                                stand2.AddToClassList("Hide");
-                                var stand3 = novelStand.rootVisualElement.Q<VisualElement>("LEFT");
-                                stand3.AddToClassList("Hide");
-                            }
-                            else
-                            {
-                                var stand = novelStand.rootVisualElement.Q<VisualElement>(standData.Point);
-                                stand.RemoveFromClassList("Hide");
+                                if (standData.Point == "DELETE")
+                                {
+                                    var stand1 = novelStand.rootVisualElement.Q<VisualElement>("RIGHT");
+                                    stand1.AddToClassList("Hide");
+                                    var stand2 = novelStand.rootVisualElement.Q<VisualElement>("CENTER");
+                                    stand2.AddToClassList("Hide");
+                                    var stand3 = novelStand.rootVisualElement.Q<VisualElement>("LEFT");
+                                    stand3.AddToClassList("Hide");
+                                }
+                                else
+                                {
+                                    var stand = novelStand.rootVisualElement.Q<VisualElement>(standData.Point);
+                                    stand.RemoveFromClassList("Hide");
 
+                                    //TODO: よみこんだデータをつかいたい
+                                    stand.style.backgroundImage = standTexture;
+                                }
+                                break;
+                            // 背景制御の場合
+                            case Order.Name.Bg_Switch:
+                                var bg = novelBg.rootVisualElement.Q<VisualElement>("bg");
+                                bg.RemoveFromClassList("Hide");
                                 //TODO: よみこんだデータをつかいたい
-                                stand.style.backgroundImage = standTexture;
-                            }
-                        }
-                        // 背景制御の場合
-                        else if (scenarioContoroller.CheckOrderBg())
-                        {
-                            var bg = novelBg.rootVisualElement.Q<VisualElement>("bg");
-                            bg.RemoveFromClassList("Hide");
-                            //TODO: よみこんだデータをつかいたい
-                            bg.style.backgroundImage = bgTexture;
-                        }
-                        else if (scenarioContoroller.CheckOrderBgm())
-                        {
+                                bg.style.backgroundImage = bgTexture;
+                                break;
+                            // BGM
+                            case Order.Name.Bgm:
+                                break;
+                            // Goto
+                            case Order.Name.Goto:
+                                scenarioContoroller.GotoLabel(scenarioContoroller.GetGotoLabel());
+                                break;
+                            // Set
+                            case Order.Name.Set:
+                                scenarioContoroller.SetVariable();
+                                break;
+                            // 選択肢
+                            case Order.Name.Select:
+                                // 選択肢を表示する
+                                // TODO:選択肢の数によって表示する位置を変更したい
+                                // TODO:選択肢を２回実行すると２回目の挙動が不安定（イベント削除でも×）
+                                selectFlg = true;
 
-                        }
-                        else if (scenarioContoroller.CheckOrderGoto())
-                        {
-                            scenarioContoroller.GotoLabel(scenarioContoroller.GetGotoLabel());
-                        }
-                        else if (scenarioContoroller.CheckOrderEmpty())
-                        {
-                            // 操作なし
-                        }
-                        else if (scenarioContoroller.CheckOrderSelect())
-                        {
-                            // 選択肢を表示する
-                            // TODO:選択肢の数によって表示する位置を変更したい
-                            // TODO:選択肢を２回実行すると２回目の挙動が不安定（イベント削除でも×）
-                            selectFlg = true;
+                                List<string> selectVeName = new List<string>();
+                                selectVeName.Add("SELECT01");
+                                selectVeName.Add("SELECT02");
+                                selectVeName.Add("SELECT03");
+                                selectVeName.Add("SELECT04");
+                                selectVeName.Add("SELECT05");
 
-                            List<string> selectVeName = new List<string>();
-                            selectVeName.Add("SELECT01");
-                            selectVeName.Add("SELECT02");
-                            selectVeName.Add("SELECT03");
-                            selectVeName.Add("SELECT04");
-                            selectVeName.Add("SELECT05");
+                                int selectNumber = scenarioContoroller.GetSelectNumber();
+                                for (int i = 0; i < selectNumber; i++)
+                                {
+                                    var selectVe = novelSelect.rootVisualElement.Q<VisualElement>(selectVeName[i]);
+                                    selectVe.RemoveFromClassList("Hide");
 
-                            int selectNumber = scenarioContoroller.GetSelectNumber();
-                            for (int i = 0; i < selectNumber; i++)
-                            {
-                                var selectVe = novelSelect.rootVisualElement.Q<VisualElement>(selectVeName[i]);
-                                selectVe.RemoveFromClassList("Hide");
+                                    var select = novelSelect.rootVisualElement.Q<Label>(selectVeName[i] + "LABEL");
+                                    select.text = scenarioContoroller.GetSelectText(i);
+                                }
+                                break;
+                            // Calc
+                            case Order.Name.Calc:
+                                scenarioContoroller.calc(scenarioContoroller.GetCalcDetail());
+                                break;
+                            // Empty
+                            case Order.Name.Empty:
+                                break;
+                            // Text
+                            default:
+                                text = scenarioContoroller.GetText();
+                                var label = novelMain.rootVisualElement.Q<Label>("TextArea");
+                                label.text = "";
 
-                                var select = novelSelect.rootVisualElement.Q<Label>(selectVeName[i] + "LABEL");
-                                select.text = scenarioContoroller.GetSelectText(i);
-                            }
-                        }
-                        else
-                        {
-                            text = scenarioContoroller.GetText();
-                            var label = novelMain.rootVisualElement.Q<Label>("TextArea");
-                            label.text = "";
+                                nameArea = scenarioContoroller.GetName();
+                                if (nameArea.Length == 0)
+                                {
+                                    var visualElement = novelMain.rootVisualElement.Q<VisualElement>("NamePlate");
+                                    visualElement.AddToClassList("Hide");
+                                }
+                                else
+                                {
+                                    var label2 = novelMain.rootVisualElement.Q<Label>("NameArea");
+                                    label2.text = nameArea;
 
-                            nameArea = scenarioContoroller.GetName();
-                            if (nameArea.Length == 0)
-                            {
-                                var visualElement = novelMain.rootVisualElement.Q<VisualElement>("NamePlate");
-                                visualElement.AddToClassList("Hide");
-                            }
-                            else
-                            {
-                                var label2 = novelMain.rootVisualElement.Q<Label>("NameArea");
-                                label2.text = nameArea;
+                                    var visualElement = novelMain.rootVisualElement.Q<VisualElement>("NamePlate");
+                                    visualElement.RemoveFromClassList("Hide");
+                                }
 
-                                var visualElement = novelMain.rootVisualElement.Q<VisualElement>("NamePlate");
-                                visualElement.RemoveFromClassList("Hide");
-                            }
-
-                            TypeingText(label, text, 0.1f, token);
-                            endFlg = false;
+                                TypeingText(label, text, 0.1f, token);
+                                endFlg = false;
+                                break;
                         }
                     }
                 }
