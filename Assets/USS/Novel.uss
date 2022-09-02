@@ -1,0 +1,207 @@
+.Root {
+    width: 100%;
+    height: 100%;
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.charctor{
+    flex-direction: row; 
+    top: 100px;
+    position: absolute;
+}
+
+.charctor-left {
+    height: 600px; 
+    width: 450px; 
+    margin-left: 0; 
+    flex-shrink: 1; 
+    flex-direction: column; 
+    left: auto;
+}
+
+.charctor-center {
+    height: 600px; 
+    width: 450px; 
+    left: auto; flex-basis: auto; 
+    flex-wrap: nowrap; flex-direction: row;
+}
+
+.charctor-right {
+    height: 600px; 
+    width: 450px; 
+    top: auto;
+}
+
+.name-area {
+    width: 320px;
+    height: 80px;
+    position: absolute;
+    left: 65px;
+    top: 320px;
+    background-color: rgb(106, 106, 106);
+}
+
+.name {
+    font-size: 48px;
+    width: 100%;
+    height: 90%;
+    left: 5%;
+    top: 3%;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: none;
+}
+
+.message-area {
+    width: 1150px;
+    height: 270px;
+    position: absolute;
+    top: 420px;
+    left: 65px;
+    background-color: rgb(39, 41, 48);
+}
+
+.message {
+    width: 90%;
+    height: 90%;
+    font-size: 48px;
+    left: 5%;
+    top: 10%;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: none;
+}
+
+.input {
+    width: 400px;
+    height: 200px;
+    left: 35%;
+    top: 30%;
+    position: absolute;
+    background-color: rgb(100, 100, 100);
+}
+
+.input-text {
+    top: 50px;
+    height: 50px;
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    -unity-font-definition: none;
+    -unity-font-style: normal;
+    -unity-text-outline-color: rgb(0, 0, 0);
+}
+
+.input-button {
+    top: 60px;
+    font-size: 24px;
+}
+
+.history {
+    width: 1280px;
+    height: 720px;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.history-view {
+    width: 1200px;
+    height: 680px;
+    left: 40px;
+    top: 20px;
+    font-size: 32px;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: none;
+}
+
+.dialog {
+    left: 100px; top: 100px; height: 414px;
+    position: absolute;
+}
+
+.select {
+
+}
+
+.select :hover{
+    background-color: rgb(72, 61, 139);
+}
+
+.select01-area {
+    width: 1050px;
+    height: 80px;
+    -unity-font-definition: none;
+    background-color: rgb(78, 114, 183);
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.select01-text {
+    font-size: 32px;
+}
+
+.select02-area {
+    width: 1050px;
+    height: 80px;
+    -unity-font-definition: none;
+    background-color: rgb(78, 114, 183);
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    top: 15px;
+}
+
+.select02-text {
+    font-size: 32px;
+}
+
+.select03-area {
+    width: 1050px;
+    height: 80px;
+    -unity-font-definition: none;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    top: 30px;
+}
+
+.select03-text {
+    font-size: 32px;
+}
+
+.select04-area {
+    width: 1050px;
+    height: 80px;
+    -unity-font-definition: none;
+    background-color: rgb(78, 114, 183);
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    top: 45px;
+}
+
+.select04-text {
+    font-size: 32px;
+}
+
+.select05-area {
+    width: 1050px;
+    height: 80px;
+    -unity-font-definition: none;
+    background-color: rgb(78, 114, 183);
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    top: 60px;
+}
+
+.select05-text {
+    font-size: 32px;
+}

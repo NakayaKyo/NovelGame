@@ -13,14 +13,6 @@ MonoBehaviour:
   m_Name: TestScenario
   m_EditorClassIdentifier: 
   scenarioData:
-  - Order: CALC
-    OrderDetail: 1+2*(3+4)+5*(6*(7+8)+(9+10))+1sin2
-    Name: 
-    Text: 
-  - Order: SET
-    OrderDetail: TEST,MESSAGE
-    Name: 
-    Text: 
   - Order: LABEL
     OrderDetail: START
     Name: 
@@ -29,70 +21,30 @@ MonoBehaviour:
     OrderDetail: 
     Name: 
     Text: 
-  - Order: STAND
-    OrderDetail: DELETE,ALL,TEST
+  - Order: 
+    OrderDetail: 
+    Name: 
+    Text: "\u3053\u3093\u306B\u3061\u306F\u3002\u30C6\u30B9\u30C8\u3067\u3059"
+  - Order: LABEL
+    OrderDetail: INPUTSTART
+    Name: 
+    Text: 
+  - Order: INPUT
+    OrderDetail: "HERONAME,\u3042\u3042\u3042\u3042"
     Name: 
     Text: 
   - Order: 
     OrderDetail: 
     Name: 
-    Text: "TEST\u3067\u3059\\n\u5DE6\u30AF\u30EA\u30C3\u30AF\u3067\u9032\u307F\u307E\u3059"
-  - Order: STAND
-    OrderDetail: CENTER,TEST,TEST
+    Text: "\u3042\u306A\u305F\u306E\u540D\u524D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
+  - Order: SELECT
+    OrderDetail: "\u306F\u3044,SELECT1,\u3044\u3044\u3048,SELECT2"
     Name: 
     Text: 
-  - Order: 
-    OrderDetail: 
-    Name: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC"
-    Text: "\u7ACB\u3061\u7D75\u8868\u793A"
-  - Order: STAND
-    OrderDetail: DELETE,ALL,TEST
-    Name: 
-    Text: 
-  - Order: 
-    OrderDetail: 
-    Name: 
-    Text: "\u7ACB\u3061\u7D75DELETE"
-  - Order: STAND
-    OrderDetail: RIGHT,TEST,TEST
-    Name: 
-    Text: 
-  - Order: 
-    OrderDetail: 
-    Name: 
-    Text: "RIGHT\u30FB\u7ACB\u3061\u7D75\u8868\u793A"
-  - Order: STAND
-    OrderDetail: LEFT,TEST,TEST
-    Name: 
-    Text: 
-  - Order: 
-    OrderDetail: 
-    Name: 
-    Text: "LEFT\u30FB\u7ACB\u3061\u7D75\u8868\u793A"
-  - Order: 
-    OrderDetail: 
-    Name: 
-    Text: "\u5C11\u3057\u9577\u3081\u306E\u30C6\u30AD\u30B9\u30C8\u3042\u3042\u3042\u3042\u3042\\n\u3042\u3042\u3042\u3042\u3042\u3042\u3042\\n\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042"
-  - Order: 
-    OrderDetail: 
-    Name: 
-    Text: "\u30DE\u30A6\u30B9\u30DB\u30A4\u30FC\u30EB\u3067\u5C65\u6B74\u3092\u95B2\u89A7\u3067\u304D\u307E\u3059"
   - Order: TEXT
     OrderDetail: 
     Name: 
-    Text: "\u5909\u6570\u3092\u8868\u793ATEST=\\[TEST]"
-  - Order: LABEL
-    OrderDetail: SELECT3
-    Name: 
-    Text: 
-  - Order: SELECT
-    OrderDetail: "\u9078\u629E\u80A2\uFF11,SELECT1,\u9078\u629E\u80A2\uFF12,SELECT2"
-    Name: 
-    Text: 
-  - Order: 
-    OrderDetail: 
-    Name: 
-    Text: "\u9078\u629E\u80A2\u3092\u9078\u3093\u3067\u304F\u3060\u3055\u3044"
+    Text: "\\[HERONAME]\u3067\u3088\u308D\u3057\u3044\u3067\u3059\u304B"
   - Order: LABEL
     OrderDetail: SELECT1
     Name: 
@@ -100,7 +52,7 @@ MonoBehaviour:
   - Order: 
     OrderDetail: 
     Name: 
-    Text: "\u9078\u629E\u80A2\uFF11\u3092\u9078\u3073\u307E\u3057\u305F"
+    Text: "\u3042\u306A\u305F\u306E\u540D\u524D\u306F\\[HERONAME]\u3067\u3059"
   - Order: GOTO
     OrderDetail: SELECTEND
     Name: 
@@ -112,24 +64,20 @@ MonoBehaviour:
   - Order: 
     OrderDetail: 
     Name: 
-    Text: "\u9078\u629E\u80A2\uFF12\u3092\u9078\u3073\u307E\u3057\u305F"
+    Text: "\u3082\u3046\u4E00\u5EA6\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
+  - Order: GOTO
+    OrderDetail: INPUTSTART
+    Name: 
+    Text: 
   - Order: LABEL
     OrderDetail: SELECTEND
     Name: 
     Text: 
-  - Order: SELECT
-    OrderDetail: "\u7D42\u308F\u308B,GAMEEND,\u6700\u521D\u304B\u3089,START"
-    Name: 
-    Text: "\u7D42\u308F\u308A\u306B\u3059\u308B\uFF1F"
+  - Order: 
+    OrderDetail: 
+    Name: \[HERONAME]
+    Text: "\u3042\u3042\u3042\u3042\u3042\u3042"
   - Order: 
     OrderDetail: 
     Name: 
-    Text: "\u7D42\u308F\u308A\u306B\u3059\u308B\uFF1F"
-  - Order: LABEL
-    OrderDetail: GAMEEND
-    Name: 
-    Text: 
-  - Order: TEXT
-    OrderDetail: 
-    Name: 
-    Text: "\u7D42\u308F\u308A"
+    Text: "\u30C6\u30B9\u30C8\u7D42\u308F\u308A\u307E\u3059"

@@ -1,11 +1,8 @@
 using System;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UIElements;
 using UnityEngine.UIElements.Experimental;
 using UnityEngine.InputSystem;
@@ -27,20 +24,7 @@ namespace NovelSystem
         private UIDocument novelMain;
 
         [SerializeField]
-        private UIDocument novelStand;
-
-        [SerializeField]
-        private UIDocument novelBg;
-
-        [SerializeField]
-        private UIDocument novelSelect;
-
-        [SerializeField]
-        private UIDocument novelBackLog;
-
-        [SerializeField]
         private AudioSource source;
-
 
         private ScenarioContoroller scenarioContoroller;
         private AudioController audioController;
@@ -49,6 +33,8 @@ namespace NovelSystem
 
         private bool selectFlg = false;
         private bool backLogFlg = false;
+        private bool inputFlg = false;
+        private bool waitFlg = false;
 
         private int backLogPoint = 0;
         private int backLogMax = 0;
@@ -138,7 +124,7 @@ namespace NovelSystem
         void Update()
         {
             // クリック時
-            if (backLogFlg == false && selectFlg == false && msc.onEnter())
+            if (inputFlg == false &&backLogFlg == false && selectFlg == false && msc.onEnter())
             {
                 NextScript();
             }
@@ -147,27 +133,36 @@ namespace NovelSystem
             if (selectFlg && msc.onEnter())
             {
                 List<string> selectVeName = new List<string>();
-                selectVeName.Add("SELECT01");
-                selectVeName.Add("SELECT02");
-                selectVeName.Add("SELECT03");
-                selectVeName.Add("SELECT04");
-                selectVeName.Add("SELECT05");
+                selectVeName.Add("select01-area");
+                selectVeName.Add("select02-area");
+                selectVeName.Add("select03-area");
+                selectVeName.Add("select04-area");
+                selectVeName.Add("select05-area");
+
+                var dialog = novelMain.rootVisualElement.Q<VisualElement>("dialog");
 
                 int selectNumber = scenarioContoroller.GetSelectNumber();
                 for (int i = 0; i < selectNumber; i++)
                 {
-                    var selectVe = novelSelect.rootVisualElement.Q<VisualElement>(selectVeName[i]);
+                    var selectVe = dialog.Q<VisualElement>(selectVeName[i]);
                     selectVe.RegisterCallback<ClickEvent>(AddSelectEvent);
                 }
             }
 
-            var backlog = novelBackLog.rootVisualElement.Q<ScrollView>("BACKLOG");
+            // 入力時
+            if(inputFlg && msc.onEnter())
+            {
+                var inputVe = novelMain.rootVisualElement.Q<Button>("input-button");
+                inputVe.RegisterCallback<ClickEvent>(AddInputEvent);
+            }
+
+            // バックログ時
+            var backlog = novelMain.rootVisualElement.Q<ScrollView>("history-view");
             backlog.RegisterCallback<WheelEvent>(AddWheelEvent);
 
-            // いったん、フラグで制御する
-            if (selectFlg == false && backLogFlg == false && msc.wheelEvent() > 0)
+            if (inputFlg == false && selectFlg == false && backLogFlg == false && msc.wheelEvent() > 0)
             {
-                var backlogArea = novelBackLog.rootVisualElement.Q<VisualElement>("BACKLOGAREA");
+                var backlogArea = novelMain.rootVisualElement.Q<VisualElement>("history");
                 backlogArea.RemoveFromClassList("Hide");
 
                 backlog.Clear();
@@ -201,7 +196,7 @@ namespace NovelSystem
             {
                 if (backLogPoint >= backLogMax)
                 {
-                    var backlogArea = novelBackLog.rootVisualElement.Q<VisualElement>("BACKLOGAREA");
+                    var backlogArea = novelMain.rootVisualElement.Q<VisualElement>("history");
                     backlogArea.AddToClassList("Hide");
                     backLogFlg = false;
                 }
@@ -225,7 +220,8 @@ namespace NovelSystem
             if (endtypeflg)
             {
                 cts.Cancel();
-                var label1 = novelMain.rootVisualElement.Q<Label>("TextArea");
+                var system = novelMain.rootVisualElement.Q<VisualElement>("system");
+                var label1 = system.Q<Label>("message");
                 label1.text = text;
                 endtypeflg = false;
 
@@ -242,6 +238,7 @@ namespace NovelSystem
                     {
                         Debug.Log("READ-END");
                         endFlg = false;
+                        FadeManager.Instance.LoadScene("test", 1.0f);
                     }
                     else
                     {
@@ -253,16 +250,16 @@ namespace NovelSystem
 
                                 if (standData.Point == "DELETE")
                                 {
-                                    var stand1 = novelStand.rootVisualElement.Q<VisualElement>("RIGHT");
+                                    var stand1 = novelMain.rootVisualElement.Q<VisualElement>("charctor-left");
                                     stand1.AddToClassList("Hide");
-                                    var stand2 = novelStand.rootVisualElement.Q<VisualElement>("CENTER");
+                                    var stand2 = novelMain.rootVisualElement.Q<VisualElement>("charctor-center");
                                     stand2.AddToClassList("Hide");
-                                    var stand3 = novelStand.rootVisualElement.Q<VisualElement>("LEFT");
+                                    var stand3 = novelMain.rootVisualElement.Q<VisualElement>("charctor-right");
                                     stand3.AddToClassList("Hide");
                                 }
                                 else
                                 {
-                                    var stand = novelStand.rootVisualElement.Q<VisualElement>(standData.Point);
+                                    var stand = novelMain.rootVisualElement.Q<VisualElement>(standData.Point);
                                     stand.RemoveFromClassList("Hide");
 
                                     //TODO: よみこんだデータをつかいたい
@@ -271,7 +268,7 @@ namespace NovelSystem
                                 break;
                             // 背景制御の場合
                             case Order.Name.Bg_Switch:
-                                var bg = novelBg.rootVisualElement.Q<VisualElement>("bg");
+                                var bg = novelMain.rootVisualElement.Q<VisualElement>("background");
                                 bg.RemoveFromClassList("Hide");
                                 //TODO: よみこんだデータをつかいたい
                                 bg.style.backgroundImage = bgTexture;
@@ -295,21 +292,30 @@ namespace NovelSystem
                                 selectFlg = true;
 
                                 List<string> selectVeName = new List<string>();
-                                selectVeName.Add("SELECT01");
-                                selectVeName.Add("SELECT02");
-                                selectVeName.Add("SELECT03");
-                                selectVeName.Add("SELECT04");
-                                selectVeName.Add("SELECT05");
+                                selectVeName.Add("select01-");
+                                selectVeName.Add("select02-");
+                                selectVeName.Add("select03-");
+                                selectVeName.Add("select04-");
+                                selectVeName.Add("select05-");
+
+                                var dialog = novelMain.rootVisualElement.Q<VisualElement>("dialog");
+                                dialog.RemoveFromClassList("Hide");
 
                                 int selectNumber = scenarioContoroller.GetSelectNumber();
                                 for (int i = 0; i < selectNumber; i++)
                                 {
-                                    var selectVe = novelSelect.rootVisualElement.Q<VisualElement>(selectVeName[i]);
+                                    var selectVe = dialog.Q<VisualElement>(selectVeName[i]+ "area");
                                     selectVe.RemoveFromClassList("Hide");
 
-                                    var select = novelSelect.rootVisualElement.Q<Label>(selectVeName[i] + "LABEL");
+                                    var select = dialog.Q<Label>(selectVeName[i] + "text");
                                     select.text = scenarioContoroller.GetSelectText(i);
                                 }
+                                break;
+                            case Order.Name.Input:
+                                inputFlg = true;
+                                var inputVe = novelMain.rootVisualElement.Q<VisualElement>("input");
+                                Debug.Log("input:" + inputVe);
+                                inputVe.RemoveFromClassList("Hide");
                                 break;
                             // Calc
                             case Order.Name.Calc:
@@ -321,21 +327,23 @@ namespace NovelSystem
                             // Text
                             default:
                                 text = scenarioContoroller.GetText();
-                                var label = novelMain.rootVisualElement.Q<Label>("TextArea");
+                                var system = novelMain.rootVisualElement.Q<VisualElement>("system");
+
+                                var label = system.Q<Label>("message");
                                 label.text = "";
 
                                 nameArea = scenarioContoroller.GetName();
                                 if (nameArea.Length == 0)
                                 {
-                                    var visualElement = novelMain.rootVisualElement.Q<VisualElement>("NamePlate");
+                                    var visualElement = system.Q<VisualElement>("name-area");
                                     visualElement.AddToClassList("Hide");
                                 }
                                 else
                                 {
-                                    var label2 = novelMain.rootVisualElement.Q<Label>("NameArea");
+                                    var label2 = system.Q<Label>("name");
                                     label2.text = nameArea;
 
-                                    var visualElement = novelMain.rootVisualElement.Q<VisualElement>("NamePlate");
+                                    var visualElement = system.Q<VisualElement>("name-area");
                                     visualElement.RemoveFromClassList("Hide");
                                 }
 
@@ -350,8 +358,21 @@ namespace NovelSystem
 
         public void AddWheelEvent(WheelEvent mue)
         {
-            var backlog = novelBackLog.rootVisualElement.Q<ScrollView>("BACKLOG");
+            var backlog = novelMain.rootVisualElement.Q<ScrollView>("history-view");
             backlog.ScrollTo(backlog.ElementAt(backLogPoint));
+        }
+
+        public void AddInputEvent(ClickEvent env)
+        {
+            inputFlg = false;
+            var inputInfo = novelMain.rootVisualElement.Q<TextField>("input-text");
+            scenarioContoroller.setInputVariable(inputInfo.text);
+
+            var inputVe = novelMain.rootVisualElement.Q<VisualElement>("input");
+            inputVe.AddToClassList("Hide");
+
+            // 次のスクリプトを読み込む
+            NextScript();
         }
 
         public void AddSelectEvent(ClickEvent env)
@@ -359,11 +380,11 @@ namespace NovelSystem
             selectFlg = false;
 
             List<string> selectVeName = new List<string>();
-            selectVeName.Add("SELECT01");
-            selectVeName.Add("SELECT02");
-            selectVeName.Add("SELECT03");
-            selectVeName.Add("SELECT04");
-            selectVeName.Add("SELECT05");
+            selectVeName.Add("select01-area");
+            selectVeName.Add("select02-area");
+            selectVeName.Add("select03-area");
+            selectVeName.Add("select04-area");
+            selectVeName.Add("select05-area");
 
             string selectString = env.currentTarget.ToString();
 
@@ -371,12 +392,15 @@ namespace NovelSystem
             string[] split = selectString.Split(" ");
 
             // 選択肢クリア
+            var dialog = novelMain.rootVisualElement.Q<VisualElement>("dialog");
+            dialog.AddToClassList("Hide");
+
             int selectNumber = scenarioContoroller.GetSelectNumber();
             for (int i = 0; i < selectNumber; i++)
             {
                 if (split[1] == selectVeName[i]) { scenarioContoroller.SelectionSelect(i); NextScript(); }
 
-                var selectVe = novelSelect.rootVisualElement.Q<VisualElement>(selectVeName[i]);
+                var selectVe = dialog.Q<VisualElement>(selectVeName[i]);
                 selectVe.AddToClassList("Hide");
 
                 // 登録したイベントを削除する

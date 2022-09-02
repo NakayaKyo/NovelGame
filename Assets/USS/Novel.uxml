@@ -1,0 +1,44 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/USS/Novel.uss?fileID=7433441132597879392&amp;guid=fe720216271768a48a175c34c242c066&amp;type=3#Novel" />
+    <Style src="project://database/Assets/USS/NovelCommon.uss?fileID=7433441132597879392&amp;guid=9c27df7d0868a78449b65d9dd1675ff1&amp;type=3#NovelCommon" />
+    <ui:VisualElement name="Root" class="Root">
+        <ui:VisualElement name="background" class="background Hide" style="background-image: url(&apos;project://database/Assets/images/bg01.png?fileID=2800000&amp;guid=8deee3592fb28e24eb8f091abe1ad2b5&amp;type=3#bg01&apos;);" />
+        <ui:VisualElement name="charctor" class="charctor">
+            <ui:VisualElement name="charctor-left" class="charctor-left Hide" style="background-image: url(&apos;project://database/Assets/images/char.png?fileID=2800000&amp;guid=23765214e5f8c584fae91f479b17f96b&amp;type=3#char&apos;);" />
+            <ui:VisualElement name="charctor-center" class="charctor-center Hide" style="background-image: url(&apos;project://database/Assets/images/char.png?fileID=2800000&amp;guid=23765214e5f8c584fae91f479b17f96b&amp;type=3#char&apos;);" />
+            <ui:VisualElement name="charctor-right" class="charctor-right Hide" style="background-image: url(&apos;project://database/Assets/images/char.png?fileID=2800000&amp;guid=23765214e5f8c584fae91f479b17f96b&amp;type=3#char&apos;);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="system" class="SystemWindow">
+            <ui:VisualElement name="name-area" class="name-area Hide">
+                <ui:Label display-tooltip-when-elided="true" name="name" class="name" style="-unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Light.otf?fileID=12800000&amp;guid=ad953c87670c30b4ab8dc6f9825c33be&amp;type=3#NotoSansJP-Light&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="message-area" class="message-area">
+                <ui:Label display-tooltip-when-elided="true" name="message" class="message" style="-unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Light.otf?fileID=12800000&amp;guid=ad953c87670c30b4ab8dc6f9825c33be&amp;type=3#NotoSansJP-Light&apos;);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="dialog" class="dialog Hide">
+            <ui:VisualElement name="select01-area" class="select01-area Hide select">
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="select01-text" class="select01-text" style="-unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Light.otf?fileID=12800000&amp;guid=ad953c87670c30b4ab8dc6f9825c33be&amp;type=3#NotoSansJP-Light&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="select02-area" class="select02-area Hide select">
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="select02-text" class="select02-text" style="-unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Light.otf?fileID=12800000&amp;guid=ad953c87670c30b4ab8dc6f9825c33be&amp;type=3#NotoSansJP-Light&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="select03-area" class="select03-area Hide select">
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="select03-text" class="select03-text" style="-unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Light.otf?fileID=12800000&amp;guid=ad953c87670c30b4ab8dc6f9825c33be&amp;type=3#NotoSansJP-Light&apos;);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="select04-area" class="select04-area Hide select">
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="select04-text" class="select04-text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="select05-area" class="select05-area Hide select">
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="select05-text" class="select05-text" style="-unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Light.otf?fileID=12800000&amp;guid=ad953c87670c30b4ab8dc6f9825c33be&amp;type=3#NotoSansJP-Light&apos;);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="input" class="InputBox input Hide">
+            <ui:TextField picking-mode="Ignore" label="名前" value="filler text" text="山田　太郎" name="input-text" class="input-text" style="top: 50px; height: 50px; -unity-font-definition: none; -unity-font: url(&apos;project://database/Assets/font/NotoSansJP-Light.otf?fileID=12800000&amp;guid=ad953c87670c30b4ab8dc6f9825c33be&amp;type=3#NotoSansJP-Light&apos;); font-size: 24px; color: rgb(0, 0, 0); -unity-font-style: normal; -unity-text-outline-color: rgb(0, 0, 0);" />
+            <ui:Button text="決定" display-tooltip-when-elided="true" name="input-button" class="input-button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="history" class="history Hide">
+            <ui:ScrollView name="history-view" class="History history-view" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

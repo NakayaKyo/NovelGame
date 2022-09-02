@@ -37,6 +37,9 @@ namespace NovelSystem.Contoroller
         // 変数情報
         private VariableData variableData = new VariableData();
 
+        // 入力情報
+        private string inputVariable = "";
+
         /// <summary>
         /// 処理を解析するメソッド
         /// </summary>
@@ -72,6 +75,10 @@ namespace NovelSystem.Contoroller
                     break;
                 case Order.ORDER_IF:
                     result = If(detail);
+                    skipLineFlag = true;
+                    break;
+                case Order.ORDER_INPUT:
+                    result = Input(detail);
                     skipLineFlag = true;
                     break;
                 case Order.ORDER_CALC:
@@ -139,6 +146,8 @@ namespace NovelSystem.Contoroller
         /// </summary>
         /// <returns></returns>
         public int GetSelectNumber() { return selectInfo.SelectNumber; }
+
+        public string GetInputVariable() { return inputVariable; }
 
         /// <summary>
         /// スキップフラグ取得
@@ -255,6 +264,36 @@ namespace NovelSystem.Contoroller
 
             return 0;
         }
+
+
+        private int Input(string detail)
+        {
+            try
+            {
+                inputVariable = "";
+                string[] split = detail.Split(",");
+
+                if (split.Length == 2)
+                {
+                    inputVariable = split[0];
+                    //split[1];
+                }
+                else
+                {
+                    errorInfo = "Order:INPUT UnmatchError ElementNum =: " + split.Length;
+                    return -1;
+                }
+            }
+            catch (Exception e)
+            {
+                errorInfo = "Order:INPUT UnknownErorr =: " + e;
+                return -1;
+            }
+
+            return 0;
+        }
+
+
 
         /// <summary>
         /// 

@@ -17,6 +17,7 @@ namespace NovelSystem.Data
         public const string ORDER_BG = "BG";
         public const string ORDER_SET = "SET";
         public const string ORDER_IF = "IF";
+        public const string ORDER_INPUT = "INPUT";
 
         /// <summary>
         /// –½—ß•¶’è‹`
@@ -32,6 +33,7 @@ namespace NovelSystem.Data
             Calc,
             Set,
             Text,
+            Input,
         };
 
         /// <summary>
@@ -47,6 +49,7 @@ namespace NovelSystem.Data
             { ORDER_LABEL , Name.Empty },
             { ORDER_CALC , Name.Calc},
             { ORDER_SET , Name.Set },
+            { ORDER_INPUT , Name.Input },
         };
 
         /// <summary>

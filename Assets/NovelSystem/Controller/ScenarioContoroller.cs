@@ -74,6 +74,8 @@ namespace NovelSystem.Contoroller
         public string GetName()
         {
             string name = scenarioData.scenarioData[currentLine].Name;
+            DataManager dataManager = new DataManager();
+            name = dataManager.ReplaceVariable(name);
             return name;
         }
 
@@ -210,6 +212,16 @@ namespace NovelSystem.Contoroller
 
             // 見つからなかった場合
             return -1;
+        }
+
+        /// <summary>
+        /// 入力されたテキストを変数に設定する
+        /// </summary>
+        /// <param name="setString"></param>
+        public void setInputVariable(string setString)
+        {
+            DataManager dataManager = new DataManager();
+            dataManager.Set(analyzer.GetInputVariable(), setString);
         }
 
         /// <summary>

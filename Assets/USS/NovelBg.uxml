@@ -1,4 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/USS/NovelCommon.uss?fileID=7433441132597879392&amp;guid=9c27df7d0868a78449b65d9dd1675ff1&amp;type=3#NovelCommon" />
-    <ui:VisualElement name="bg" class="Hide" style="background-image: url(&apos;project://database/Assets/images/bg01.png?fileID=2800000&amp;guid=8deee3592fb28e24eb8f091abe1ad2b5&amp;type=3#bg01&apos;); width: 1280px; height: 720px;" />
-</ui:UXML>
